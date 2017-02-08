@@ -1,5 +1,5 @@
 using Nancy;
-using Todo.objects;
+using Todo.Objects;
 using System.Collections.Generic;
 
 namespace ToDoList
@@ -16,7 +16,11 @@ namespace ToDoList
         return View["task.cshtml"];
       };
       Get["/tasks/new"] = _ => {
-        return view["task_form.cshtml"];
+        return View["task_form.cshtml"];
+      };
+      Get["/task/{id}"] = parameters => {
+        Task task = Task.Find(parameters.id);
+        return View["task.cshtml", task];
       };
       Post["/tasks"] = _ => {
         Task newTask = new Task(Request.Form["new-task"]);
